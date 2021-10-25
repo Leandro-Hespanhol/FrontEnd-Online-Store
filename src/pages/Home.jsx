@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import './Home.css';
 
 export default class Home extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ export default class Home extends Component {
   render() {
     const { categoriesList, searchBar, actualProduct } = this.state;
     return (
-      <div>
+      <main>
         <label htmlFor="search">
           <input
             type="text"
@@ -69,26 +70,30 @@ export default class Home extends Component {
           </p>
         </label>
         <Link to="/cart" data-testid="shopping-cart-button"> Carrinho </Link>
-        { actualProduct.length === 0 ? <h1>Nenhum produto foi encontrado</h1>
-          : (
-            actualProduct.map((product) => (<Card
-              thumbnail={ product.thumbnail }
-              price={ product.price }
-              title={ product.title }
-              key={ product.id }
-            />))
-          )}
-        <ul>
-          {categoriesList.map((category) => (
-            <li
-              data-testid="category"
-              key={ category.id }
-            >
-              {category.name}
-            </li>
-          ))}
-        </ul>
-      </div>
+        <div className="categories-products-div">
+          <ul>
+            {categoriesList.map((category) => (
+              <li
+                data-testid="category"
+                key={ category.id }
+              >
+                {category.name}
+              </li>
+            ))}
+          </ul>
+          <div className="list-container">
+            { actualProduct.length === 0 ? <h1>Nenhum produto foi encontrado</h1>
+              : (
+                actualProduct.map((product) => (<Card
+                  thumbnail={ product.thumbnail }
+                  price={ product.price }
+                  title={ product.title }
+                  key={ product.id }
+                />))
+              )}
+          </div>
+        </div>
+      </main>
     );
   }
 }

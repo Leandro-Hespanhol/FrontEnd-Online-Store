@@ -1,0 +1,9 @@
+.categories-products-div {
+  display: flex;
+}
+
+.list-container {
+  border: 2px solid red;
+  display: flex;
+  flex-wrap: wrap;
+}
