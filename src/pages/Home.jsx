@@ -1,8 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { getCategories } from '../services/api';
 
 export default class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      categoriesList: [],
+    };
+  }
+
+  componentDidMount() {
+    this.fetchCategories();
+  }
+
+  fetchCategories = async () => {
+    const categories = await getCategories();
+
+    this.setState({
+      categoriesList: categories,
+    });
+  }
+
   render() {
+    const { categoriesList } = this.state;
     return (
       <div>
         <label htmlFor="search">
@@ -19,6 +41,16 @@ export default class Home extends Component {
           </p>
         </label>
         <Link to="/cart" data-testid="shopping-cart-button"> Carrinho </Link>
+        <ul>
+          {categoriesList.map((category) => (
+            <li
+              data-testid="category"
+              key={ category.id }
+            >
+              {category.name}
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
