@@ -8,6 +8,7 @@ export default class Home extends Component {
           <input
             type="text"
             id="search"
+            placeholder="Busca..."
           />
           <p
             data-testid="home-initial-message"
