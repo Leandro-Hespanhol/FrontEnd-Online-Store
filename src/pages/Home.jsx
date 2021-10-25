@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories } from '../services/api';
+import Card from '../components/Card';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       categoriesList: [],
+      searchBar: '',
+      actualProduct: [],
     };
   }
 
   componentDidMount() {
     this.fetchCategories();
+  }
+
+  inputText = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  buttonClick = async () => {
+    const { searchBar } = this.state;
+    const { results } = await getProductsFromCategoryAndQuery('', searchBar);
+    this.setState({
+      actualProduct: results,
+    });
   }
 
   fetchCategories = async () => {
@@ -24,7 +41,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { categoriesList } = this.state;
+    const { categoriesList, searchBar, actualProduct } = this.state;
     return (
       <div>
         <label htmlFor="search">
@@ -32,7 +49,18 @@ export default class Home extends Component {
             type="text"
             id="search"
             placeholder="Busca..."
+            data-testid="query-input"
+            name="searchBar"
+            value={ searchBar }
+            onChange={ this.inputText }
           />
+          <button
+            type="button"
+            data-testid="query-button"
+            onClick={ this.buttonClick }
+          >
+            Pesquisar
+          </button>
           <p
             data-testid="home-initial-message"
           >
@@ -41,6 +69,15 @@ export default class Home extends Component {
           </p>
         </label>
         <Link to="/cart" data-testid="shopping-cart-button"> Carrinho </Link>
+        { actualProduct.length === 0 ? <h1>Nenhum produto foi encontrado</h1>
+          : (
+            actualProduct.map((product) => (<Card
+              thumbnail={ product.thumbnail }
+              price={ product.price }
+              title={ product.title }
+              key={ product.id }
+            />))
+          )}
         <ul>
           {categoriesList.map((category) => (
             <li
