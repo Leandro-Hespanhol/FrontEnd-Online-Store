@@ -6,7 +6,7 @@ import { getCategories, getProductsFromCategoryAndQuery } from '../services/api'
 export default class Home extends Component {
   constructor(props) {
     super(props);
-    // requisito 5 mais uma vez
+    // requisito 5 mais uma ves
     this.state = {
       categoriesList: [],
       searchBar: '',
