@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { getCategories } from '../services/api';
 
 export default class Home extends Component {
@@ -39,6 +40,7 @@ export default class Home extends Component {
 
           </p>
         </label>
+        <Link to="/cart" data-testid="shopping-cart-button"> Carrinho </Link>
         <ul>
           {categoriesList.map((category) => (
             <li
