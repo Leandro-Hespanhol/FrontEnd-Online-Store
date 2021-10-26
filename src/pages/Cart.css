@@ -1,0 +1,33 @@
+header {
+  text-align: center;
+}
+
+header h1 {
+  text-shadow: 3px 2px #dfdddd;
+}
+
+.cart-item-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px;
+}
+
+.cart-item {
+  align-items: center;
+  background-color: bisque;
+  border: 2px solid rgb(0, 0, 0);
+  box-shadow: 3px 5px #888888;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px;
+  text-align: center;
+  width: 250px;
+}
+
+.img-item-cart {
+  border-radius: 30%;
+  width: 75%;
+}
