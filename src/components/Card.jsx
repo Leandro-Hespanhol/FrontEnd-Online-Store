@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Card.css';
+import { Link } from 'react-router-dom';
 
 export default class Card extends Component {
   render() {
     const { thumbnail, title, price, id, addToCart } = this.props;
+
     return (
       <div data-testid="product" className="product-container">
         <h4>{ title }</h4>
@@ -18,6 +20,16 @@ export default class Card extends Component {
         >
           Adicionar ao Carrinho
         </button>
+
+        <Link
+          data-testid="product-detail-link"
+          to={ {
+            pathname: `/ProductDetails/${id}`,
+            state: { title, thumbnail, price },
+          } }
+        >
+          Especificações Tecnicas
+        </Link>
       </div>
     );
   }
