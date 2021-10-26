@@ -12,6 +12,7 @@ export default class Home extends Component {
       searchBar: '',
       actualProduct: [],
       category: '',
+      cartList: [],
     };
   }
 
@@ -20,9 +21,11 @@ export default class Home extends Component {
   }
 
   inputText = ({ target }) => {
-    const { name, value } = target;
+    const { name, value, type } = target;
     this.setState({
       [name]: value,
+    }, () => {
+      if (type === 'radio') this.buttonClick();
     });
   }
 
@@ -42,8 +45,14 @@ export default class Home extends Component {
     });
   }
 
+  addToCart = ({ target: { id } }) => {
+    const { cartList, actualProduct } = this.state;
+    const product = actualProduct.find((item) => item.id === id);
+    this.setState({ cartList: [...cartList, product] });
+  }
+
   render() {
-    const { categoriesList, searchBar, actualProduct } = this.state;
+    const { categoriesList, searchBar, actualProduct, cartList } = this.state;
     return (
       <main>
         <label htmlFor="search">
@@ -70,30 +79,46 @@ export default class Home extends Component {
 
           </p>
         </label>
-        <Link to="/cart" data-testid="shopping-cart-button"> Carrinho </Link>
+        <Link
+          data-testid="shopping-cart-button"
+          to={ {
+            pathname: '/cart',
+            state: { cartList },
+          } }
+        >
+          Carrinho
+        </Link>
+        <span data-testid="shopping-cart-product-quantity">
+          { cartList.length }
+        </span>
         <div className="categories-products-div">
           <div>
-            {categoriesList.map((category) => (
-              <div key={ category.id }>
+            {categoriesList.map(({ id, name }) => (
+              <label htmlFor={ id } key={ id }>
                 <input
                   type="radio"
                   data-testid="category"
                   name="category"
-                  onClick={ this.buttonClick }
+                  id={ id }
+                  value={ id }
                   onChange={ this.inputText }
                 />
-                {category.name}
-              </div>
+                {name}
+              </label>
             ))}
           </div>
           <div className="list-container">
             { actualProduct.length === 0 ? <h1>Nenhum produto foi encontrado</h1>
               : (
-                actualProduct.map((product) => (<Card
-                  thumbnail={ product.thumbnail }
-                  price={ product.price }
-                  title={ product.title }
+                actualProduct.map((product, index) => (<Card
+                  item={ actualProduct[index] }
+                  { ...product }
+                  id={ product.id }
+                  data-testid={ cartList.includes(product.id)
+                    ? 'shopping-cart-product-name'
+                    : '' }
                   key={ product.id }
+                  addToCart={ this.addToCart }
                 />))
               )}
           </div>

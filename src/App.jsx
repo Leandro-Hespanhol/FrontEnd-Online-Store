@@ -10,7 +10,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={ Home } />
-          <Route path="/cart" component={ Cart } />
+          <Route path="/cart" render={ (props) => (<Cart { ...props } />) } />
         </Switch>
       </BrowserRouter>
     );
