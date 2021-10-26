@@ -110,8 +110,7 @@ export default class Home extends Component {
           <div className="list-container">
             { actualProduct.length === 0 ? <h1>Nenhum produto foi encontrado</h1>
               : (
-                actualProduct.map((product, index) => (<Card
-                  item={ actualProduct[index] }
+                actualProduct.map((product) => (<Card
                   { ...product }
                   id={ product.id }
                   data-testid={ cartList.includes(product.id)
