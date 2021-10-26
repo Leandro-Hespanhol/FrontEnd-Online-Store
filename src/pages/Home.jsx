@@ -72,18 +72,20 @@ export default class Home extends Component {
         </label>
         <Link to="/cart" data-testid="shopping-cart-button"> Carrinho </Link>
         <div className="categories-products-div">
-          {categoriesList.map((category) => (
-            <div key={ category.id }>
-              <input
-                type="radio"
-                data-testid="category"
-                name="category"
-                onClick={ this.buttonClick }
-                onChange={ this.inputText }
-              />
-              {category.name}
-            </div>
-          ))}
+          <div>
+            {categoriesList.map((category) => (
+              <div key={ category.id }>
+                <input
+                  type="radio"
+                  data-testid="category"
+                  name="category"
+                  onClick={ this.buttonClick }
+                  onChange={ this.inputText }
+                />
+                {category.name}
+              </div>
+            ))}
+          </div>
           <div className="list-container">
             { actualProduct.length === 0 ? <h1>Nenhum produto foi encontrado</h1>
               : (
