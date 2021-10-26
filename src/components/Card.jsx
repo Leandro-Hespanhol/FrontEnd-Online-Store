@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default class Card extends Component {
   render() {
-    const { thumbnail, title, price, id, addToCart } = this.props;
-
+    const { thumbnail, title, price, id, addToCart, product, cartList } = this.props;
     return (
       <div data-testid="product" className="product-container">
         <h4>{ title }</h4>
@@ -25,7 +24,7 @@ export default class Card extends Component {
           data-testid="product-detail-link"
           to={ {
             pathname: `/ProductDetails/${id}`,
-            state: { title, thumbnail, price },
+            state: { title, thumbnail, price, product, cartList },
           } }
         >
           Especificações Tecnicas
@@ -41,4 +40,6 @@ Card.propTypes = {
   price: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   addToCart: PropTypes.func.isRequired,
+  product: PropTypes.objectOf(PropTypes.any).isRequired,
+  cartList: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
