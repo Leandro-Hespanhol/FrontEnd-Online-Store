@@ -11,12 +11,20 @@ class ProductDetails extends React.Component {
     this.state = {
       product,
       cartList,
+      inputValue: '',
     };
   }
 
+  inputText = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
   render() {
     const { location: { state: { title, price, thumbnail } } } = this.props;
-    const { product, cartList } = this.state;
+    const { product, cartList, inputValue } = this.state;
     return (
       <>
         <h4 data-testid="product-detail-name">{title}</h4>
@@ -38,6 +46,19 @@ class ProductDetails extends React.Component {
         >
           Carrinho
         </Link>
+        <form>
+          <textarea
+            data-testid="product-detail-evaluation"
+            value={ inputValue }
+            name="inputValue"
+            onChange={ this.inputText }
+          />
+          <button
+            type="button"
+          >
+            Enviar
+          </button>
+        </form>
       </>
     );
   }
