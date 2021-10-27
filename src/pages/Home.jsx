@@ -112,12 +112,14 @@ export default class Home extends Component {
               : (
                 actualProduct.map((product) => (<Card
                   { ...product }
+                  product={ product }
                   id={ product.id }
                   data-testid={ cartList.includes(product.id)
                     ? 'shopping-cart-product-name'
                     : '' }
                   key={ product.id }
                   addToCart={ this.addToCart }
+                  cartList={ cartList }
                 />))
               )}
           </div>
