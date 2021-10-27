@@ -14,6 +14,25 @@ export default class Cart extends Component {
     };
   }
 
+  incrementProduct = ({ target: { id } }) => {
+    const { cartList } = this.state;
+    const addProduct = cartList.find((elem) => elem.id === id);
+    this.setState({ cartList: [...cartList, addProduct] });
+  }
+
+  decrementProduct = ({ target: { id } }) => {
+    const { cartList, items } = this.state;
+    const removeProduct = cartList.find((elem) => elem.id === id);
+    const productList = cartList.filter((elem) => elem.id === id);
+    cartList.splice(cartList.indexOf(removeProduct), 1);
+    if (productList.length < 2) {
+      items.splice(items.indexOf(removeProduct), 1);
+      this.setState({ items });
+    }
+
+    this.setState({ cartList: [...cartList] });
+  }
+
   render() {
     const { items, cartList } = this.state;
     return (
@@ -36,6 +55,14 @@ export default class Cart extends Component {
                     className="img-item-cart"
                   />
                   <p>{`Preço: R$${item.price}`}</p>
+                  <button
+                    type="button"
+                    data-testid="product-increase-quantity"
+                    onClick={ this.incrementProduct }
+                    id={ item.id }
+                  >
+                    +
+                  </button>
                   <p
                     data-testid="shopping-cart-product-quantity"
                   >
@@ -43,6 +70,16 @@ export default class Cart extends Component {
                       cartList.filter(({ id }) => id === item.id).length
                     }`}
                   </p>
+                  <div>
+                    <button
+                      type="button"
+                      data-testid="product-decrease-quantity"
+                      onClick={ this.decrementProduct }
+                      id={ item.id }
+                    >
+                      -
+                    </button>
+                  </div>
                 </div>
               )))}
         </div>
