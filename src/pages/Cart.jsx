@@ -11,17 +11,31 @@ export default class Cart extends Component {
     this.state = {
       cartList,
       items: [...new Set(cartList)],
+      totalPrice: 0,
     };
   }
 
-  incrementProduct = ({ target: { id } }) => {
+  componentDidMount() {
+    this.initialTotalPrice();
+  }
+
+  initialTotalPrice = () => {
+    let { totalPrice } = this.state;
     const { cartList } = this.state;
+    cartList.forEach((elem) => {
+      (this.setState({ totalPrice: totalPrice += elem.price }));
+    });
+  }
+
+  incrementProduct = ({ target: { id } }) => {
+    const { cartList, totalPrice } = this.state;
     const addProduct = cartList.find((elem) => elem.id === id);
     this.setState({ cartList: [...cartList, addProduct] });
+    this.setState({ totalPrice: totalPrice + addProduct.price });
   }
 
   decrementProduct = ({ target: { id } }) => {
-    const { cartList, items } = this.state;
+    const { cartList, items, totalPrice } = this.state;
     const removeProduct = cartList.find((elem) => elem.id === id);
     const productList = cartList.filter((elem) => elem.id === id);
     cartList.splice(cartList.indexOf(removeProduct), 1);
@@ -31,10 +45,11 @@ export default class Cart extends Component {
     }
 
     this.setState({ cartList: [...cartList] });
+    this.setState({ totalPrice: totalPrice - removeProduct.price });
   }
 
   render() {
-    const { items, cartList } = this.state;
+    const { items, cartList, totalPrice } = this.state;
     return (
       <div className="body-cart-container">
         <header><h1>Seu Carrinho</h1></header>
@@ -83,6 +98,10 @@ export default class Cart extends Component {
                 </div>
               )))}
         </div>
+        <p>
+          Total: R$
+          { totalPrice }
+        </p>
       </div>
     );
   }
