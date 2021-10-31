@@ -2,6 +2,11 @@
   display: flex;
 }
 
+.categories {
+  display: flex;
+  flex-direction: column;
+}
+
 .list-container {
   border: 2px solid red;
   display: flex;

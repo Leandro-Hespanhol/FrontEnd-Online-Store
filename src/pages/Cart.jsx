@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './Cart.css';
+import { Link } from 'react-router-dom';
+import { getCart, saveCart } from '../services/storage';
 
 export default class Cart extends Component {
   constructor(props) {
     super(props);
 
-    const { location: { state: { cartList } } } = this.props;
-
+    const cart = getCart();
+    // hhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+    const uniques = [...new Map(cart.map((item) => [item.id, item])).values()];
     this.state = {
-      cartList,
-      items: [...new Set(cartList)],
+      cartList: cart,
+      items: uniques,
       totalPrice: 0,
     };
   }
@@ -30,8 +32,11 @@ export default class Cart extends Component {
   incrementProduct = ({ target: { id } }) => {
     const { cartList, totalPrice } = this.state;
     const addProduct = cartList.find((elem) => elem.id === id);
+    saveCart([...cartList, addProduct]);
     this.setState({ cartList: [...cartList, addProduct] });
-    this.setState({ totalPrice: totalPrice + addProduct.price });
+    this.setState({
+      totalPrice: parseFloat((totalPrice + addProduct.price).toFixed(2)),
+    });
   }
 
   decrementProduct = ({ target: { id } }) => {
@@ -43,9 +48,11 @@ export default class Cart extends Component {
       items.splice(items.indexOf(removeProduct), 1);
       this.setState({ items });
     }
-
+    saveCart([...cartList]);
     this.setState({ cartList: [...cartList] });
-    this.setState({ totalPrice: totalPrice - removeProduct.price });
+    this.setState({
+      totalPrice: parseFloat((totalPrice - removeProduct.price).toFixed(2)),
+    });
   }
 
   render() {
@@ -102,11 +109,16 @@ export default class Cart extends Component {
           Total: R$
           { totalPrice }
         </p>
+        <p>
+          {`Itens ${cartList.length}`}
+        </p>
+        <Link
+          to="/checkout"
+          data-testid="checkout-products"
+        >
+          <button type="button">Finalizar compra</button>
+        </Link>
       </div>
     );
   }
 }
-
-Cart.propTypes = {
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
-};
