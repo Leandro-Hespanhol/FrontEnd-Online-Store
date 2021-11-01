@@ -6,12 +6,17 @@ import { Link } from 'react-router-dom';
 export default class Card extends Component {
   render() {
     const { product, addToCart } = this.props;
-    const { thumbnail, title, price, id } = product;
+    const { thumbnail, title, price, id, shipping: { free_shipping: free } } = product;
     return (
       <div data-testid="product" className="product-container">
         <h4>{ title }</h4>
         <img src={ thumbnail } alt={ title } className="img-card" />
         <p>{`Preço: R$${price}`}</p>
+        <p
+          data-testid={ free && 'free-shipping' }
+        >
+          { free && 'free-shipping' }
+        </p>
         <button
           type="button"
           data-testid="product-add-to-cart"

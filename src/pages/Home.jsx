@@ -125,7 +125,7 @@ export default class Home extends Component {
         <Link data-testid="shopping-cart-button" to="/cart">
           Carrinho
         </Link>
-        <span data-testid="shopping-cart-product-quantity">
+        <span data-testid="shopping-cart-size">
           { cartList.length }
         </span>
 
