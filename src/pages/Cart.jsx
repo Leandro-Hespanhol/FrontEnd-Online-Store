@@ -29,14 +29,19 @@ export default class Cart extends Component {
     });
   }
 
+  hasAvailable = (item, cartList) => cartList.filter(({ id }) => id === item.id).length
+    < item.available_quantity;
+
   incrementProduct = ({ target: { id } }) => {
     const { cartList, totalPrice } = this.state;
     const addProduct = cartList.find((elem) => elem.id === id);
-    saveCart([...cartList, addProduct]);
-    this.setState({ cartList: [...cartList, addProduct] });
-    this.setState({
-      totalPrice: parseFloat((totalPrice + addProduct.price).toFixed(2)),
-    });
+    if (this.hasAvailable(addProduct, cartList)) {
+      saveCart([...cartList, addProduct]);
+      this.setState({ cartList: [...cartList, addProduct] });
+      this.setState({
+        totalPrice: parseFloat((totalPrice + addProduct.price).toFixed(2)),
+      });
+    }
   }
 
   decrementProduct = ({ target: { id } }) => {
@@ -91,6 +96,9 @@ export default class Cart extends Component {
                     {`Quantidade: ${
                       cartList.filter(({ id }) => id === item.id).length
                     }`}
+                  </p>
+                  <p>
+                    {`Quantidade disponível: ${item.available_quantity}`}
                   </p>
                   <div>
                     <button

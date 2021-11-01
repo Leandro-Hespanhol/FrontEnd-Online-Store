@@ -30,7 +30,7 @@ class ProductDetails extends React.Component {
 
   render() {
     const { product, cartList, inputValue } = this.state;
-    const { title, price, thumbnail } = product;
+    const { title, price, thumbnail, shipping: { free_shipping: free } } = product;
     return (
       <>
         <h4 data-testid="product-detail-name">{title}</h4>
@@ -46,9 +46,14 @@ class ProductDetails extends React.Component {
         <Link data-testid="shopping-cart-button" to="/cart">
           Carrinho
         </Link>
-        <span data-testid="shopping-cart-product-quantity">
+        <span data-testid="shopping-cart-size">
           { cartList.length }
         </span>
+        <p
+          data-testid={ free && 'free-shipping' }
+        >
+          { free && 'free-shipping' }
+        </p>
         <form>
           <textarea
             data-testid="product-detail-evaluation"
