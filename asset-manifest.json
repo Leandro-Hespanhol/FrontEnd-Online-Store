@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Frontend-Online-Store-React/static/css/main.ee1e6c61.chunk.css",
+    "main.js": "/Frontend-Online-Store-React/static/js/main.aa5931be.chunk.js",
+    "main.js.map": "/Frontend-Online-Store-React/static/js/main.aa5931be.chunk.js.map",
+    "runtime-main.js": "/Frontend-Online-Store-React/static/js/runtime-main.ce1e8882.js",
+    "runtime-main.js.map": "/Frontend-Online-Store-React/static/js/runtime-main.ce1e8882.js.map",
+    "static/js/2.3a01d10a.chunk.js": "/Frontend-Online-Store-React/static/js/2.3a01d10a.chunk.js",
+    "static/js/2.3a01d10a.chunk.js.map": "/Frontend-Online-Store-React/static/js/2.3a01d10a.chunk.js.map",
+    "index.html": "/Frontend-Online-Store-React/index.html",
+    "precache-manifest.37b1490796246dcc6f118933951245df.js": "/Frontend-Online-Store-React/precache-manifest.37b1490796246dcc6f118933951245df.js",
+    "service-worker.js": "/Frontend-Online-Store-React/service-worker.js",
+    "static/css/main.ee1e6c61.chunk.css.map": "/Frontend-Online-Store-React/static/css/main.ee1e6c61.chunk.css.map",
+    "static/js/2.3a01d10a.chunk.js.LICENSE.txt": "/Frontend-Online-Store-React/static/js/2.3a01d10a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ce1e8882.js",
+    "static/js/2.3a01d10a.chunk.js",
+    "static/css/main.ee1e6c61.chunk.css",
+    "static/js/main.aa5931be.chunk.js"
+  ]
+}
